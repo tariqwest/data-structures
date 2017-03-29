@@ -3,7 +3,6 @@ var Queue = function() {
 
   // Use an object with numeric keys to store values
   someInstance.storage = {};
-  var count = 0;
 
   for(var key in queueMethods){
   	someInstance[key] = queueMethods[key];
