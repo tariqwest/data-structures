@@ -8,7 +8,7 @@ var Stack = function() {
   someInstance.push = function(value) { 
     someInstance.storage[count] = value;
     count++;
-  };;
+  };
 
   someInstance.pop = function() {
     var last = someInstance.storage[count-1];
