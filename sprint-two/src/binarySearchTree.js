@@ -55,5 +55,11 @@ BinarySearchTree.prototype.depthFirstLog = function(callback){
  * Complexity: What is the time complexity of the above functions?
  */
 
- // var tree = BinarySearchTree(20);
- 
+// Insert
+// O(n)
+
+// Contains
+// O(n)
+
+// depthFirstLog
+// O(log(n))
