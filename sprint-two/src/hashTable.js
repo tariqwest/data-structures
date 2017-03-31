@@ -7,7 +7,7 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
     var index = getIndexBelowMaxForKey(k, this._limit);
-    var keyValuePair = [k,v]
+    var keyValuePair = [k,v];
     var storageSlot = this._storage.get(index);
     if(storageSlot){
       var keyValuePairExists = false;
@@ -44,7 +44,7 @@ HashTable.prototype.remove = function(k) {
   if(storageSlot){
     for(var i=0; i<storageSlot.length; i++){
       if(storageSlot[i][0] === k){
-        storageSlot.splice(storageSlot.indexOf(storageSlot[i]), 1);
+        storageSlot.splice(i, 1);
       }
     }
   }
