@@ -22,7 +22,6 @@ var Queue = function() {
   someInstance.dequeue = function() {
     var last = someInstance.storage[count-1];    
     delete someInstance.storage[count-1];
-    console.log(someInstance.storage);
     if (count > 0) {
       count--;
     }

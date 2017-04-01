@@ -1,0 +1,42 @@
+Datastructure  | Instantiation Pattern | Operation | Runtime
+
+Queue            Functional               create     0.7
+Queue            Functional				  enqueue    35
+Queue            Functional				  dequeue    0.1
+Queue            Functional				  size		 
+
+Queue            Functional-s             create		
+Queue            Functional-s			  enqueue
+Queue            Functional-s			  dequeue
+Queue            Functional-s			  size	
+
+Queue            Prototypal               create
+Queue            Prototypal				  enqueue
+Queue            Prototypal				  dequeue
+Queue            Prototypal				  size	
+
+Queue            Pseudoclassical          create
+Queue            Pseudoclassical		  enqueue
+Queue            Pseudoclassical		  dequeue
+Queue            Pseudoclassical		  size	
+
+
+Stack            Functional               create
+Stack            Functional				  push
+Stack            Functional				  pop
+Stack            Functional				  size	
+
+Stack            Functional-s             create
+Stack            Functional-s			  push
+Stack            Functional-s			  pop
+Stack            Functional-s			  size	
+
+Stack            Prototypal               create
+Stack            Prototypal				  push
+Stack            Prototypal				  pop
+Stack            Prototypal				  size	
+
+Stack            Pseudoclassical          create
+Stack            Pseudoclassical		  push
+Stack            Pseudoclassical		  pop
+Stack            Pseudoclassical		  size	
