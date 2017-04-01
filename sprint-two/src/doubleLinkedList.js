@@ -1,4 +1,4 @@
-var LinkedList = function() {
+var DoubleLinkedList = function() {
     var list = {};
     list.head = null;
     list.tail = null;
@@ -13,6 +13,7 @@ var LinkedList = function() {
             list.head = list.tail;
             list.head.next = 'tail';
             list.tail = Node(value);
+            list.tail.prev = 'head';
         } else {
             var tempNode = list.tail;
             list.tail = Node(value);
@@ -20,6 +21,21 @@ var LinkedList = function() {
             count === 1 ? list.head.next = count : list[count - 1].next = count;
             list[count] = tempNode;
             count++;
+        }
+    };
+
+    list.addToHead = function(value) {
+        if (list.head === null) {
+            list.head = Node(value);
+        } else if (list.tail === null) {
+            list.tail = list.head;
+            list.head = Node(value);
+            list.head.next = 'tail';
+        } else {
+            var tempNode = list.head;
+            list.head = Node(value);
+
+
         }
     };
 
@@ -43,6 +59,10 @@ var LinkedList = function() {
         return oldValue;
     };
 
+    list.removeTail = function() {
+
+    };
+
     list.contains = function(target) {
         for (var key in list) {
             if (list[key].value === target) {
@@ -60,6 +80,7 @@ var Node = function(value) {
 
     node.value = value;
     node.next = null;
+    node.prev = null;
 
     return node;
 };
@@ -72,4 +93,4 @@ var Node = function(value) {
 addTotail - O(1)
 removeHead - O(1)
 contains - O(n)
- */
+*/
