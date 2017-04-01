@@ -27,7 +27,6 @@ Queue.prototype = {
   dequeue : function() {
     var last = this.storage[this.size()-1];    
     delete this.storage[this.size()-1];
-    console.log(this.storage);
     return last;
   }
 };

@@ -8,7 +8,6 @@ var Stack = function() {
   return someInstance;
 };
 
-
 var stackMethods = {
 	size : function() {
 		var count = 0;
