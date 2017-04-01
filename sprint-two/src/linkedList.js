@@ -2,45 +2,41 @@ var LinkedList = function() {
     var list = {};
     list.head = null;
     list.tail = null;
-    var count = 1;
+    var item = 1;
 
     //{ tail: {value: 44, next: null}}
 
     list.addToTail = function(value) {
         if (list.tail === null) {
-            list.tail = Node(value);
+            list[item] = ListNode(value, item, null);
+            list.tail = list[item];
         } else if (list.head === null) {
+            list[item] = ListNode(value, item, null);
+            list[list.tail.key].next = list[item].key;
             list.head = list.tail;
-            list.head.next = 'tail';
-            list.tail = Node(value);
+            list.tail = list[item];
         } else {
-            var tempNode = list.tail;
-            list.tail = Node(value);
-            tempNode.next = 'tail';
-            count === 1 ? list.head.next = count : list[count - 1].next = count;
-            list[count] = tempNode;
-            count++;
+            list[item] = ListNode(value, item, null);
+            list[list.tail.key].next = list[item].key;
+            list.tail = list[item];     
         }
+        item++;
+
     };
 
     list.removeHead = function() {
         if (list.head === null) {
-            var tailValue = list.tail.value;
-            delete list.tail;
-            return tailValue;
-        }
-        var nextKey = list.head.next;
-        var next = list[nextKey];
-        var oldValue = list.head.value;
-
-        if (nextKey === 'tail') {
-            list.head = list.tail;
-            delete list.tail;
+            var oldTailValue = list.tail.value;
+            delete list[list.tail.key];
+            return oldTailValue;
         } else {
-            list.head = next;
-            delete list[nextKey];
+            var oldHeadValue = list.head.value;
+            var oldHeadKey = list.head.key;
+            list.head = list[list.head.next];
+            delete list[oldHeadKey]; 
+            return oldHeadValue;
         }
-        return oldValue;
+
     };
 
     list.contains = function(target) {
@@ -55,11 +51,12 @@ var LinkedList = function() {
     return list;
 };
 
-var Node = function(value) {
+var Node = function(value, key, next) {
     var node = {};
 
     node.value = value;
-    node.next = null;
+    node.next = next;
+    node.key = key;
 
     return node;
 };

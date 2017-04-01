@@ -2,65 +2,71 @@ var DoubleLinkedList = function() {
     var list = {};
     list.head = null;
     list.tail = null;
-    var count = 1;
+    var item = 1;
 
     //{ tail: {value: 44, next: null}}
 
     list.addToTail = function(value) {
         if (list.tail === null) {
-            list.tail = Node(value);
+            list[item] = ListNode(value, item, null, null);
+            list.tail = list[item];
         } else if (list.head === null) {
+            list[item] = ListNode(value, item, null, list.tail.key);
+            list[list.tail.key].next = list[item].key;
             list.head = list.tail;
-            list.head.next = 'tail';
-            list.tail = Node(value);
-            list.tail.prev = 'head';
+            list.tail = list[item];
         } else {
-            var tempNode = list.tail;
-            list.tail = Node(value);
-            tempNode.next = 'tail';
-            count === 1 ? list.head.next = count : list[count - 1].next = count;
-            list[count] = tempNode;
-            count++;
+            list[item] = ListNode(value, item, null, list.tail.key);
+            list[list.tail.key].next = list[item].key;
+            list.tail = list[item];     
         }
+        item++;
     };
 
     list.addToHead = function(value) {
         if (list.head === null) {
-            list.head = Node(value);
+          list[item] = ListNode(value, item, null, null);
+          list.head = list[item];
         } else if (list.tail === null) {
+            list[item] = ListNode(value, item, list.head.key, null);
+            list[list.head.key].prev = list[item].key;
             list.tail = list.head;
-            list.head = Node(value);
-            list.head.next = 'tail';
+            list.head = list[item];
         } else {
-            var tempNode = list.head;
-            list.head = Node(value);
-
-
+            list[item] = ListNode(value, item, list.head.key, null);
+            list[list.head.key].prev = list[item].key;
+            list.head = list[item];     
         }
+        item++;
+
     };
 
     list.removeHead = function() {
-        if (list.head === null) {
-            var tailValue = list.tail.value;
-            delete list.tail;
-            return tailValue;
-        }
-        var nextKey = list.head.next;
-        var next = list[nextKey];
-        var oldValue = list.head.value;
-
-        if (nextKey === 'tail') {
-            list.head = list.tail;
-            delete list.tail;
-        } else {
-            list.head = next;
-            delete list[nextKey];
-        }
-        return oldValue;
+      if (list.head === null) {
+        var oldTailValue = list.tail.value;
+        delete list[list.tail.key];
+        return oldTailValue;
+      } else {
+        var oldHeadValue = list.head.value;
+        list.head = list[list.head.next];
+        delete list[list.head.prev]; 
+        list.head.prev = null;
+        return oldHeadValue;
+      }
     };
 
     list.removeTail = function() {
-
+      if (list.tail === null) {
+        var oldHeadValue = list.head.value;
+        delete list[list.head.key];
+        return oldHeadValue;
+      } else {
+          var oldTailValue = list.tail.value;
+          list.tail = list[list.tail.prev];
+          delete list[list.tail.next]; 
+          list.tail.next = null;
+          return oldTailValue;
+        }
     };
 
     list.contains = function(target) {
@@ -75,14 +81,15 @@ var DoubleLinkedList = function() {
     return list;
 };
 
-var Node = function(value) {
-    var node = {};
+var ListNode = function(value, key, next, prev) {
+    var ListNode = {};
 
-    node.value = value;
-    node.next = null;
-    node.prev = null;
+    ListNode.value = value;
+    ListNode.next = next;
+    ListNode.prev = prev;
+    ListNode.key = key;
 
-    return node;
+    return ListNode;
 };
 
 /*
