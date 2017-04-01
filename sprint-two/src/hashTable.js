@@ -1,52 +1,87 @@
 var HashTable = function() {
     this._limit = 8;
     this._storage = LimitedArray(this._limit);
+    this._count = 0;
 };
 
 HashTable.prototype.insert = function(k, v) {
     var index = getIndexBelowMaxForKey(k, this._limit);
     var keyValuePair = [k, v];
-    var storageSlot = this._storage.get(index);
-    if (storageSlot) {
+    var bucket = this._storage.get(index);
+    if (bucket) {
         var keyValuePairExists = false;
-        for (var i = 0; i < storageSlot.length; i++) {
-            if (storageSlot[i][0] === k) {
-                storageSlot[i][1] = v;
+        for (var i = 0; i < bucket.length; i++) {
+            if (bucket[i][0] === k) {
+                bucket[i][1] = v;
                 keyValuePairExists = true;
             }
         }
         if (keyValuePairExists === false) {
-            storageSlot.push(keyValuePair);
+            bucket.push(keyValuePair);
         }
     } else {
-        storageSlot = [];
-        storageSlot.push(keyValuePair);
-        this._storage.set(index, storageSlot);
+        bucket = [];
+        bucket.push(keyValuePair);
+        this._storage.set(index, bucket);
+    }
+    this._count++
+    if(this._count > Math.floor(0.75*(this._limit))){
+        this._resize('expand')
     }
 };
 
 HashTable.prototype.retrieve = function(k) {
     var index = getIndexBelowMaxForKey(k, this._limit);
-    var storageSlot = this._storage.get(index);
-    for (var i = 0; i < storageSlot.length; i++) {
-        if (storageSlot[i][0] === k) {
-            return storageSlot[i][1];
+    var bucket = this._storage.get(index);
+    if (bucket) {
+        for (var i = 0; i < bucket.length; i++) {
+            if (bucket[i][0] === k) {
+                return bucket[i][1];
+            }
         }
     }
-    return undefined;
+    return undefined;   
 };
 
 HashTable.prototype.remove = function(k) {
     var index = getIndexBelowMaxForKey(k, this._limit);
-    var storageSlot = this._storage.get(index);
-    if (storageSlot) {
-        for (var i = 0; i < storageSlot.length; i++) {
-            if (storageSlot[i][0] === k) {
-                storageSlot.splice(i, 1);
+    var bucket = this._storage.get(index);
+    if (bucket) {
+        for (var i = 0; i < bucket.length; i++) {
+            if (bucket[i][0] === k) {
+                bucket.splice(i, 1);
             }
         }
     }
+    this._count--;
+    if (this._count < Math.ceil(0.25*(this._limit))){
+        this._resize('contract');
+    }
 };
+
+HashTable.prototype._resize = function(size) {
+    var oldStorage = this._storage;
+    var oldLimit = this._limit;
+    if (size === 'expand') {
+        this._limit = this._limit*2;
+    } else {
+        this._limit = this._limit/2;
+    }
+    this._storage = LimitedArray(this._limit);
+    this._count = 0;
+    this._rehash(oldStorage, oldLimit);    
+};
+
+HashTable.prototype._rehash = function(oldStorage, oldLimit) {
+    for (var i = 0; i < oldLimit; i++) {
+        var bucket = oldStorage.get(i);
+        if(bucket){
+            for(var j=0; j < bucket.length; j++){
+                this.insert(bucket[j][0], bucket[j][1]);
+            }
+        }
+    }
+}
 
 
 
