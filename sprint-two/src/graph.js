@@ -13,7 +13,7 @@ Graph.prototype.contains = function(node) {
 	for (var i = 0; i < this.storage.length; i++) {
 		if (this.storage[i].value === node) {
 			return true;
-		}	
+		}
 	}
 	return false;
 };
@@ -30,11 +30,11 @@ Graph.prototype.removeNode = function(node) {
 				}
 				this.storage.splice(i, 1);
 			}
-		}	
+		}
 
 	}
 
-	
+
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
@@ -77,7 +77,7 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 			if (indexOfFromNode > -1) {
 				this.storage[i].edges.splice(indexOfFromNode, 1);
 				return true;
-			}			
+			}
 		}
 	}
 	return false;
@@ -112,4 +112,3 @@ hasEdge - O(n)
 removeEdge - O(n)
 forEachNode - O(n)
  */
-}
