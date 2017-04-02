@@ -1,0 +1,6 @@
+// Read in corupus of all words
+	// For each word with unique first character, add a node for that character
+		// Add a node for first char + second char in word
+			// Add a node for first char + second char + third char
+
+
